@@ -1,8 +1,8 @@
 <?php
 
-namespace SAPb1\Filters;
+namespace Patrickkivits\PhpSapb1\Filters;
 
-class LessThan extends Filter{
+class Contains extends Filter{
     
     private $field;
     private $value;
@@ -13,6 +13,6 @@ class LessThan extends Filter{
     }
 
     public function execute(){
-        return $this->field . " lt " . $this->escape($this->value);
+        return 'contains(' . $this->field . "," . $this->escape($this->value) . ")";
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace SAPb1\Filters;
+namespace Patrickkivits\PhpSapb1\Filters;
 
 class Raw extends Filter{
     

@@ -1,6 +1,6 @@
 <?php
 
-namespace SAPb1;
+namespace Patrickkivits\PhpSapb1;
 
 /**
  * Encapsulates an SAP B1 HTTP response.

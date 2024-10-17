@@ -1,6 +1,6 @@
 <?php
 
-namespace SAPb1;
+namespace Patrickkivits\PhpSapb1;
 
 /**
  * SAPClient manages access to SAP B1 Service Layer and provides methods to 

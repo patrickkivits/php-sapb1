@@ -1,6 +1,6 @@
 <?php
 
-namespace SAPb1;
+namespace Patrickkivits\PhpSapb1;
 
 /**
  * Service class contains methods to perform CRUD actions on a service.
