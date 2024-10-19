@@ -1,8 +1,8 @@
 <?php
 
-namespace Patrickkivits\PhpSapb1\Filters;
+namespace SAPb1\Filters;
 
-class Equal extends Filter{
+class Contains extends Filter{
     
     private $field;
     private $value;
@@ -13,6 +13,6 @@ class Equal extends Filter{
     }
 
     public function execute(){
-        return $this->field . " eq " . $this->escape($this->value);
+        return 'contains(' . $this->field . "," . $this->escape($this->value) . ")";
     }
 }

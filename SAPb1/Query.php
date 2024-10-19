@@ -1,6 +1,6 @@
 <?php
 
-namespace Patrickkivits\PhpSapb1;
+namespace SAPb1;
 
 class Query{
     
@@ -68,7 +68,7 @@ class Query{
      * Adds a SAPb1\Filter to filter the results. This method performs an
      * AND operation.
      */
-    public function where(\Patrickkivits\PhpSapb1\Filters\Filter $filter) : Query{
+    public function where(Filters\Filter $filter) : Query{
         $filter->setOperator('and');
         $this->filters[] = $filter;
         return $this;
@@ -78,7 +78,7 @@ class Query{
      * Adds a SAPb1\Filter to filter the results. This method performs an
      * OR operation.
      */
-    public function orWhere(\Patrickkivits\PhpSapb1\Filters\Filter $filter) : Query{
+    public function orWhere(Filters\Filter $filter) : Query{
         $filter->setOperator('or');
         $this->filters[] = $filter;
         return $this;

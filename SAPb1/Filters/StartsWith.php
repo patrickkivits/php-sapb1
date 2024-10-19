@@ -1,8 +1,8 @@
 <?php
 
-namespace Patrickkivits\PhpSapb1\Filters;
+namespace SAPb1\Filters;
 
-class EndsWith extends Filter{
+class StartsWith extends Filter{
     
     private $field;
     private $value;
@@ -13,6 +13,6 @@ class EndsWith extends Filter{
     }
 
     public function execute(){
-        return 'endswith(' . $this->field . "," . $this->escape($this->value) . ")";
+        return 'startswith(' . $this->field . "," . $this->escape($this->value) . ")";
     }
 }

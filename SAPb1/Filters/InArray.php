@@ -1,6 +1,6 @@
 <?php
 
-namespace Patrickkivits\PhpSapb1\Filters;
+namespace SAPb1\Filters;
 
 class InArray extends Filter{
     

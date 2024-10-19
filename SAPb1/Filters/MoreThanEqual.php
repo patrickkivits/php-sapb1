@@ -1,8 +1,8 @@
 <?php
 
-namespace Patrickkivits\PhpSapb1\Filters;
+namespace SAPb1\Filters;
 
-class StartsWith extends Filter{
+class MoreThanEqual extends Filter{
     
     private $field;
     private $value;
@@ -13,6 +13,6 @@ class StartsWith extends Filter{
     }
 
     public function execute(){
-        return 'startswith(' . $this->field . "," . $this->escape($this->value) . ")";
+        return $this->field . " ge " . $this->escape($this->value);
     }
 }

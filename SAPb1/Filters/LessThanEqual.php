@@ -1,8 +1,8 @@
 <?php
 
-namespace Patrickkivits\PhpSapb1\Filters;
+namespace SAPb1\Filters;
 
-class LessThan extends Filter{
+class LessThanEqual extends Filter{
     
     private $field;
     private $value;
@@ -13,6 +13,6 @@ class LessThan extends Filter{
     }
 
     public function execute(){
-        return $this->field . " lt " . $this->escape($this->value);
+        return $this->field . " le " . $this->escape($this->value);
     }
 }

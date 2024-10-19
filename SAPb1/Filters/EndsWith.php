@@ -1,8 +1,8 @@
 <?php
 
-namespace Patrickkivits\PhpSapb1\Filters;
+namespace SAPb1\Filters;
 
-class MoreThanEqual extends Filter{
+class EndsWith extends Filter{
     
     private $field;
     private $value;
@@ -13,6 +13,6 @@ class MoreThanEqual extends Filter{
     }
 
     public function execute(){
-        return $this->field . " ge " . $this->escape($this->value);
+        return 'endswith(' . $this->field . "," . $this->escape($this->value) . ")";
     }
 }
