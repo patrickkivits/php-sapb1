@@ -1,0 +1,19 @@
+{
+  "name": "patrickkivits/php-sapb1",
+  "autoload": {
+    "psr-4": {
+      "SAPb1\\": "SAPb1/"
+    }
+  },
+  "authors": [
+    {
+      "name": "syedhussim",
+      "homepage": "https://github.com/syedhussim"
+    },
+    {
+      "name": "Patrick Kivits",
+      "email": "patrick@patrickkivits.nl"
+    }
+  ],
+  "require": {}
+}
