@@ -69,16 +69,18 @@ class Request{
     public function getResponse() : Response{
         if(!empty($this->files)) {
             $boundary = 'WebKitFormBoundaryUmZoXOtOBNCTLyxT';
-            $this->headers['Content-Type'] = 'multipart/form-data;  boundary='.$boundary;
+            $this->headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;
 
             $postData = '';
             foreach ($this->files as $file) {
-                $postData .= '--'.$boundary.'\r\n'.'
-                Content-Disposition: form-data; name="files"; filename="'.basename($file).'"\r\n'.'
-                Content-Type: '.mime_content_type($file).'\r\n\r\n'.'
-                '.file_get_contents($file).'\r\n';
+                $postData .= '--'.$boundary.'
+                Content-Disposition: form-data; name="files"; filename="'.basename($file).'"
+                Content-Type: '.mime_content_type($file).'
+
+                '.file_get_contents($file);
             }
-            $postData .= '--'.$boundary.'--\r\n';
+            $postData .= '
+            --'.$boundary.'--';
         } else {
             $postData = (null != $this->postParams) ? json_encode($this->postParams) : '';
 
