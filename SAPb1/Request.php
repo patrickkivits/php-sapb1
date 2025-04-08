@@ -73,13 +73,12 @@ class Request{
 
             $postData = '';
             foreach ($this->files as $file) {
-                $postData = '--'.$boundary.PHP_EOL.'
-                Content-Disposition: form-data; name="files"; filename="'.basename($file).'"'.PHP_EOL.'
-                Content-Type: '.mime_content_type($file).PHP_EOL.'
-                '.file_get_contents($file).PHP_EOL.'
-                --'.$boundary;
+                $postData .= '--'.$boundary.'\r\n'.'
+                Content-Disposition: form-data; name="files"; filename="'.basename($file).'"\r\n'.'
+                Content-Type: '.mime_content_type($file).'\r\n\r\n'.'
+                '.file_get_contents($file).'\r\n';
             }
-            $postData .= '--';
+            $postData .= '--'.$boundary.'--\r\n';
         } else {
             $postData = (null != $this->postParams) ? json_encode($this->postParams) : '';
 
