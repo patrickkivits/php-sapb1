@@ -15,5 +15,9 @@
       "email": "patrick@patrickkivits.nl"
     }
   ],
-  "require": {}
+  "require": {
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-fileinfo": "*"
+  }
 }

@@ -11,6 +11,7 @@ class Request{
     protected $sslOptions = [];
     protected $method = 'GET';
     protected $postParams = null;
+    protected $files = [];
     protected $cookies = [];
     protected $headers = [];
     
@@ -37,6 +38,14 @@ class Request{
         $this->postParams = $postParams;
         return $this;
     }
+
+    /**
+     * Sets the files data.
+     */
+    public function setFiles(array $files) : Request{
+        $this->files = $files;
+        return $this;
+    }
     
     /**
      * Sets the request cookie data.
@@ -58,23 +67,39 @@ class Request{
      * Executes the request and gets the response.
      */
     public function getResponse() : Response{
+        if(!empty($this->files)) {
+            $boundary = 'WebKitFormBoundaryUmZoXOtOBNCTLyxT';
+            $this->headers['Content-Type'] = 'multipart/form-data;  boundary='.$boundary;
 
-        $postdata = (null != $this->postParams) ? json_encode($this->postParams) : '';
+            $postData = '';
+            foreach ($this->files as $file) {
+                $postData = '--'.$boundary.PHP_EOL.'
+                Content-Disposition: form-data; name="files"; filename="'.basename($file).'"'.PHP_EOL.'
+                Content-Type: '.mime_content_type($file).PHP_EOL.'
+                '.file_get_contents($file).PHP_EOL.'
+                --'.$boundary;
+            }
+            $postData .= '--';
+        } else {
+            $postData = (null != $this->postParams) ? json_encode($this->postParams) : '';
 
-        $header = "Content-Type: application/json\r\n";
-        $header.= "Content-Length: " . strlen($postdata) . "\r\n";
+            $this->headers['Content-Type'] = 'application/json';
+            $this->headers['Content-Length'] = strlen($postData);
+        }
         
         if(count($this->cookies) > 0){
-            $header.= "Cookie: ";
+            $cookies = '';
             foreach($this->cookies as $name => $value){
-                $header.= $name .'='. $value . ';';
+                $cookies.= $name .'='. $value . ';';
             }
-            $header.= "\r\n";
+
+            $this->headers['Cookie'] = $cookies;
         }
 
+        $header = '';
         if(count($this->headers)){
             foreach($this->headers as $name => $value){
-                $header.= $name .':'. $value . "\r\n";
+                $header.= $name .': '. $value . "\r\n";
             }
         }
 
@@ -82,7 +107,7 @@ class Request{
             'http' => array(
                 'ignore_errors' => true,
                 'method'  => $this->method,
-                'content' => $postdata,
+                'content' => $postData,
                 'header'  => $header,
             ),
             "ssl" => $this->sslOptions

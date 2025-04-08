@@ -116,6 +116,35 @@ class Service{
         
         throw new SAPException($response);
     }
+
+    /**
+     * Upload files
+     * Throws SAPb1\SAPException if an error occurred.
+     */
+    public function upload($id, array $files, $returnResponse = false){
+
+        $method = 'POST';
+        if(is_string($id)){
+            $method = 'PATCH';
+            $id = "'" . str_replace("'", "''", $id) . "'";
+        }
+
+        $response = $this->doRequest($method, null, $id ? '(' . $id . ')' : null, $files);
+
+        if($returnResponse){
+            return $response;
+        }
+
+        if(in_array($response->getStatusCode(), [200, 201])){
+            return $response->getJson();
+        }
+
+        if($response->getStatusCode() === 204){
+            return true;
+        }
+
+        throw new SAPException($response);
+    }
     
     /**
      * Returns a new instance of SAPb1\Query.
@@ -186,12 +215,13 @@ class Service{
         return $meta;
     }
     
-    private function doRequest($method, $postData, $action = '') : Response{
+    private function doRequest($method, $postData, $action = '', $files = []) : Response{
         $request = new Request($this->config->getServiceUrl($this->serviceName) . $action, $this->config->getSSLOptions());
         $request->setMethod($method);
         $request->setCookies($this->session);
         $request->setHeaders($this->headers);
         $request->setPost($postData);
+        $request->setFiles($files);
 
         return $request->getResponse();
     }
