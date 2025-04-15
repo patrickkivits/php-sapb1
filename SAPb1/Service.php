@@ -124,9 +124,12 @@ class Service{
     public function upload($id, array $files, $returnResponse = false){
 
         $method = 'POST';
-        if(is_string($id)){
+
+        if($id) {
             $method = 'PATCH';
-            $id = "'" . str_replace("'", "''", $id) . "'";
+            if(is_string($id)){
+                $id = "'" . str_replace("'", "''", $id) . "'";
+            }
         }
 
         $response = $this->doRequest($method, null, $id ? '(' . $id . ')' : null, $files);
