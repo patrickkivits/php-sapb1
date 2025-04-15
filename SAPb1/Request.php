@@ -73,20 +73,21 @@ class Request{
 
             $postData = '';
             foreach ($this->files as $file) {
-                $postData .= '--'.$boundary.'
-                Content-Disposition: form-data; name="files"; filename="'.basename($file).'"
-                Content-Type: '.mime_content_type($file).'
+                $fileName = basename($file);
+                $mimeType = mime_content_type($file);
 
-                '.file_get_contents($file);
+                $postData = "--{$boundary}\r\n";
+                $postData .= "Content-Disposition: form-data; name=\"{$fileName}\"; filename=\"{$fileName}\"\r\n";
+                $postData .= "Content-Type: {$mimeType}\r\n\r\n";
+                $postData .= file_get_contents($file)."\r\n";
             }
-            $postData .= '
-            --'.$boundary.'--';
+            $postData .= "--{$boundary}--";
         } else {
             $postData = (null != $this->postParams) ? json_encode($this->postParams) : '';
-
             $this->headers['Content-Type'] = 'application/json';
-            $this->headers['Content-Length'] = strlen($postData);
         }
+
+        $this->headers['Content-Length'] = strlen($postData);
         
         if(count($this->cookies) > 0){
             $cookies = '';
