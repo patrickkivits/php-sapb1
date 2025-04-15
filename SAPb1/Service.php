@@ -121,15 +121,8 @@ class Service{
      * Upload files
      * Throws SAPb1\SAPException if an error occurred.
      */
-    public function upload($id, array $files, $returnResponse = false){
-
-        $method = 'POST';
-        if(is_string($id)){
-            $method = 'PATCH';
-            $id = "'" . str_replace("'", "''", $id) . "'";
-        }
-
-        $response = $this->doRequest($method, null, $id ? '(' . $id . ')' : null, $files);
+    public function upload(array $files, $returnResponse = false){
+        $response = $this->doRequest('POST', null, null, $files);
 
         if($returnResponse){
             return $response;
